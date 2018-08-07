@@ -83,12 +83,12 @@ extension CyclingPowerService {
          */
         open func setErgMode(_ watts: UInt16) {
             ergWriteWatts = watts
-            
-            if ergWriteTimer == nil || !ergWriteTimer!.isValid {
-                writeErgWatts()
-                ergWriteTimer = Timer(timeInterval: ErgWriteDelay, target: self, selector: #selector(writeErgWatts(_:)), userInfo: nil, repeats: true)
-                RunLoop.main.add(ergWriteTimer!, forMode: .commonModes)
-            }
+            cbCharacteristic.write(Data(bytes: WahooTrainerSerializer.seErgMode(writeWatts)), writeType: .withResponse)
+//            if ergWriteTimer == nil || !ergWriteTimer!.isValid {
+//                writeErgWatts()
+//                ergWriteTimer = Timer(timeInterval: ErgWriteDelay, target: self, selector: #selector(writeErgWatts(_:)), userInfo: nil, repeats: true)
+//                RunLoop.main.add(ergWriteTimer!, forMode: .commonModes)
+//            }
         }
         
         open func setSimMode(weight: Float, rollingResistanceCoefficient: Float, windResistanceCoefficient: Float) {
